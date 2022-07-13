@@ -58,13 +58,23 @@ def read_s3dis_format(area_id: str,
     extract data from a room folder
     """
     room_type = room_name.split('_')[0]
-    room_label = ROOM_TYPES[room_type]
+    # FIX the bug, where '.DS_Store' is in the Area_1
+    try:
+        room_label = ROOM_TYPES[room_type]
+    except:
+        print('The key not exist in the room types')
     room_dir = osp.join(data_root, area_id, room_name)
     raw_path = osp.join(room_dir, f'{room_name}.txt')
 
     room_ver = pd.read_csv(raw_path, sep=' ', header=None).values
     xyz = np.ascontiguousarray(room_ver[:, 0:3], dtype='float32')
-    rgb = np.ascontiguousarray(room_ver[:, 3:6], dtype='uint8')
+
+    # BUG, check: https://github.com/thangvubk/SoftGroup/issues/51 and revise the S3DIS data according to the patch file https://raw.githubusercontent.com/Gorilla-Lab-SCUT/gorilla-3d/dev/gorilla3d/preprocessing/s3dis/s3dis_align.patch
+    try:
+        rgb = np.ascontiguousarray(room_ver[:, 3:6], dtype='uint8')
+    except:
+        print(raw_path)
+        print('rgb values are not bet. 0~255')
     if not label_out:
         return xyz, rgb
     n_ver = len(room_ver)

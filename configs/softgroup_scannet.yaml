@@ -75,5 +75,6 @@ fp16: False
 epochs: 128
 step_epoch: 50
 save_freq: 4
-pretrain: './hais_ckpt_spconv2.pth'
+# pretrain: './hais_ckpt_spconv2.pth'
+pretrain: './checkpoints/hais_ckpt_spconv2.pth'
 work_dir: ''
