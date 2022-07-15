@@ -2,14 +2,16 @@
 
 - 1.5h; set up the dev env on server-HP w. softgroup env + install the scannetv2 + tutorial(yc.md and install.sh)
 - 1.5h; preprocess s3dis and tackle the bugs (shown in the FAQ section)
+- 3h; inference on val set of the scannetv2 w. success, still some problems for infer on the test set of scannetv2
 
 ## TODOs
 
 - eval metrics; AP, AP_50/25, Bbox AP_50/25
-- cp scannetv2, and setup the dirs
-- make inference on the test data
-- play w. visualization;
-- infer for custom dataset
+- [x] cp scannetv2, and setup the dirs
+- [x] make inference on the val set
+- make inference on the test set
+- [x] play w. visualization;
+- infer for custom dataset, e.g., vincent's UGV data
 
 ## install
 
@@ -22,6 +24,14 @@
 
 - install the whole dataset, about 1.3TB
 
+### prepare the dataset
+
+run `prepare_data.sh`; internally, it do the following:
+- only copy 4 files from the ScanNet v2 which are `*._vh_clean_2.ply and *._vh_clean_2.labels.ply`; details check `split_data.py`; this means that we no longer need download the whole scannet v2 (1.4TB, tooks 6 days) but download these 4 files. 
+- run `prepare_data_inst.py`
+- run `prepare_data_inst_gttxt.py` to generate instance groundtruth .txt files (for evaluation)
+
+**After runing the script, several folders are generated train/val/test and val_gt where each scan contains a ply point cloud and corresponding labels and other meta files (mainly for the train/val folder)
 
 ### train
 
@@ -38,7 +48,23 @@
 
 ### visualization
 
+use `visualization.py` to check instance or semantic results, more check the visualization.md (note there are some argument naming errors in this file); below is successful verison.
+
+```
+time python tools/visualization.py \
+--dataset ${dataset} \
+--prediction_path ${prediction_path}\
+--data_split ${data_split} \
+--room_name ${room_name} \
+--task ${task} \
+--out ${out}
+```
+
+
+### run on the custom data
+
 TODO
+
 
 ## S3DIS
 ### download and preprocess the S3DIS
@@ -61,6 +87,8 @@ SoftGroup
 │   │   ├── preprocess_sample
 │   │   ├── val_gt
 ```
+
+For more details for preprocessing the ScanNetv2 ,check the HAIS repo: https://github.com/hustvl/HAIS, where the ply and label files are mainly used for training/val/test.
 
 ### train
 
@@ -100,5 +128,3 @@ TODO
 
 - some files have literal string int the data;
 - check: https://github.com/thangvubk/SoftGroup/issues/51 and revise the S3DIS data according to the patch file https://raw.githubusercontent.com/Gorilla-Lab-SCUT/gorilla-3d/dev/gorilla3d/preprocessing/s3dis/s3dis_align.patch
-
-
