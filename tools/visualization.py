@@ -169,7 +169,9 @@ def get_coords_color(opt):
 
     elif (opt.task == 'semantic_pred'):
         assert opt.data_split != 'train'
-        semantic_file = os.path.join(opt.prediction_path, opt.data_split, 'semantic',
+        # semantic_file = os.path.join(opt.prediction_path, opt.data_split, 'semantic',
+        #                              opt.room_name + '.npy')
+        semantic_file = os.path.join(opt.prediction_path, 'semantic_pred',
                                      opt.room_name + '.npy')
         assert os.path.isfile(semantic_file), 'No semantic result - {}.'.format(semantic_file)
         label_pred = np.load(semantic_file).astype(np.int)  # 0~19
@@ -178,7 +180,9 @@ def get_coords_color(opt):
 
     elif (opt.task == 'offset_semantic_pred'):
         assert opt.data_split != 'train'
-        semantic_file = os.path.join(opt.prediction_path, opt.data_split, 'semantic',
+        # semantic_file = os.path.join(opt.prediction_path, opt.data_split, 'semantic',
+        #                              opt.room_name + '.npy')
+        semantic_file = os.path.join(opt.prediction_path, 'offset_pred',
                                      opt.room_name + '.npy')
         assert os.path.isfile(semantic_file), 'No semantic result - {}.'.format(semantic_file)
         label_pred = np.load(semantic_file).astype(np.int)  # 0~19
@@ -210,7 +214,8 @@ def get_coords_color(opt):
     # same color order according to instance pointnum
     elif (opt.task == 'instance_pred'):
         assert opt.data_split != 'train'
-        instance_file = os.path.join(opt.prediction_path, opt.data_split, opt.room_name + '.txt')
+        # instance_file = os.path.join(opt.prediction_path, opt.data_split, opt.room_name + '.txt')
+        instance_file = os.path.join(opt.prediction_path,'pred_instance', opt.room_name + '.txt')
         assert os.path.isfile(instance_file), 'No instance result - {}.'.format(instance_file)
         f = open(instance_file, 'r')
         masks = f.readlines()
@@ -226,7 +231,8 @@ def get_coords_color(opt):
         sort_inds = np.argsort(scores)[::-1]
         for i_ in range(len(masks) - 1, -1, -1):
             i = sort_inds[i_]
-            mask_path = os.path.join(opt.prediction_path, opt.data_split, masks[i][0])
+            # mask_path = os.path.join(opt.prediction_path, opt.data_split, masks[i][0])
+            mask_path = os.path.join(opt.prediction_path, 'pred_instance', masks[i][0])
             assert os.path.isfile(mask_path), mask_path
             if (float(masks[i][2]) < 0.09):
                 continue
@@ -286,13 +292,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--dataset',
-        choices=['scannet', 's3dis'],
+        choices=['scannetv2', 's3dis'],
         help='dataset for visualization',
-        default='scannet')
+        default='scannetv2')
     parser.add_argument(
         '--prediction_path',
         help='path to the prediction results',
-        default='./exp/scannetv2/softgroup/softgroup_default_scannet/result')
+        default='./exp/scannetv2/result')
     parser.add_argument(
         '--data_split', help='train/val/test for scannet or Area_ID for s3dis', default='val')
     parser.add_argument('--room_name', help='room_name', default='scene0011_00')
@@ -308,7 +314,8 @@ if __name__ == '__main__':
     colors = rgb / 255
 
     if opt.out != '':
-        assert '.ply' in opt.out, 'output cloud file should be in FILE.ply format'
+        # assert '.ply' in opt.out, 'output cloud file should be in FILE.ply format'
+        print(opt.out)
         write_ply(points, colors, None, opt.out)
     else:
         import open3d as o3d
