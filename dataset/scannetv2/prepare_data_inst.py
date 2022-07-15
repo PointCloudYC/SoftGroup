@@ -1,8 +1,10 @@
 """Modified from SparseConvNet data preparation: https://github.com/facebookres
 earch/SparseConvNet/blob/master/examples/ScanNet/prepare_data.py."""
 
+
 import argparse
 import glob
+
 import json
 import multiprocessing as mp
 

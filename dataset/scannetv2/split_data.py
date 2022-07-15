@@ -3,6 +3,7 @@ import shutil
 
 # split scans specified in scannetv2_{train/val/test}.txt
 
+# splits = ['test']
 splits = ['train', 'val', 'test']
 
 for split in splits:

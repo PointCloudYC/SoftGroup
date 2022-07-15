@@ -23,7 +23,7 @@ def get_args():
     parser.add_argument('config', type=str, help='path to config file')
     parser.add_argument('checkpoint', type=str, help='path to checkpoint')
     parser.add_argument('--dist', action='store_true', help='run with distributed parallel')
-    parser.add_argument('--out', type=str, help='directory for output results')
+    parser.add_argument('--out', type=str, help='directory for output results', default='exp/scannetv2/result')
     args = parser.parse_args()
     return args
 

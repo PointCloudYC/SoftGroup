@@ -84,3 +84,6 @@ dataset/stpls3d/Synthetic_v3_InstanceSegmentation
 # yc
 work_dirs/**
 checkpoints/*.pth
+exp/**
+exp-val/**
+exp-test/**
