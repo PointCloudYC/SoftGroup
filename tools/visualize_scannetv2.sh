@@ -4,7 +4,9 @@ dataset="scannetv2"
 # val mode
 prediction_path="./exp-val/scannetv2/result"
 data_split="val"
-room_name="scene0011_00"
+# room_name="scene0011_00"
+# room_name="scene0685_00"
+room_name="scene0693_02"
 tasks=("instance_gt" "instance_pred" "semantic_gt" "semantic_pred")
 
 # test mode; NOTE: need address test issue first which need to create dummy semantic&instance labels.

@@ -7,11 +7,11 @@
 ## TODOs
 
 - eval metrics; AP, AP_50/25, Bbox AP_50/25
-- [x] cp scannetv2, and setup the dirs
+- [x] set up scannet v2; cp scannetv2, and setup the dirs
 - [x] make inference on the val set
-- make inference on the test set
 - [x] play w. visualization;
-- infer for custom dataset, e.g., vincent's UGV data
+- make inference on the test set with newly created dummy sem/ins labels.
+- train/validate a custom dataset, e.g., vincent's UGV data
 
 ## install
 
@@ -44,6 +44,8 @@ run `prepare_data.sh`; internally, it do the following:
 ```
 ./tools/dist_test.sh configs/softgroup_scannet.yaml softgroup_scannet_spconv2.pth 4
 ```
+
+Currently, only succeed on the validation set; For the test set, need create dummy semantic_label and instance_label for the test set to allow run the `test.py`, see [issue 39](https://github.com/thangvubk/SoftGroup/issues/39)
 
 
 ### visualization
@@ -109,6 +111,8 @@ Then, train model from frozen backbone.
 ```
 ./tools/dist_test.sh configs/softgroup_s3dis_fold5.yaml softgroup_s3dis_spconv2.pth 4
 ```
+
+Currently, not succeed on the test set(Area_5), it need a larger GPU(My experiments are performed on 48G GPU so that i don't have memory issues) based on the  [about S3DIS test · Issue #45 · thangvubk/SoftGroup](https://github.com/thangvubk/SoftGroup/issues/45) and [need lger GPU to make inference on S3DIS](https://github.com/thangvubk/SoftGroup/issues/68), maybe 3090 GPU can help. Yet, 
 
 
 ### visualization
