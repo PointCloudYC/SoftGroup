@@ -72,10 +72,11 @@ dataset/scannetv2/test
 dataset/scannetv2/val_gt
 dataset/scannetv2/scannetv2-labels.combined.tsv
 
-dataset/s3dis/preprocess
-dataset/s3dis/val_gt
-dataset/s3dis/preprocess_sample
+dataset/*/preprocess
+dataset/*/val_gt
+dataset/*/preprocess_sample
 dataset/s3dis/Stanford3dDataset_v1.2
+dataset/5gdataset/5GDataset
 
 dataset/stpls3d/train
 dataset/stpls3d/val
@@ -85,5 +86,5 @@ dataset/stpls3d/Synthetic_v3_InstanceSegmentation
 work_dirs/**
 checkpoints/*.pth
 exp/**
-exp-val/**
+exp-val*/**
 exp-test/**

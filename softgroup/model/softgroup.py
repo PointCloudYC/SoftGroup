@@ -424,9 +424,13 @@ class SoftGroup(nn.Module):
                 cls_pred = cls_pred[inds]
                 score_pred = score_pred[inds]
                 mask_pred = mask_pred[inds]
-            cls_pred_list.append(cls_pred)
-            score_pred_list.append(score_pred)
-            mask_pred_list.append(mask_pred)
+            # avoid mmemory OOM when testing on S3DIS, based on https://github.com/thangvubk/SoftGroup/issues/68
+            # cls_pred_list.append(cls_pred)
+            # score_pred_list.append(score_pred)
+            # mask_pred_list.append(mask_pred)
+            cls_pred_list.append(cls_pred.cpu())
+            score_pred_list.append(score_pred.cpu())
+            mask_pred_list.append(mask_pred.cpu())
         cls_pred = torch.cat(cls_pred_list).cpu().numpy()
         score_pred = torch.cat(score_pred_list).cpu().numpy()
         mask_pred = torch.cat(mask_pred_list).cpu().numpy()

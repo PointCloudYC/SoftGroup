@@ -21,22 +21,23 @@ ROOM_TYPES = {
     'lounge': 8,
     'lobby': 9,
     'openspace': 10,
+    # add types for the 5GDataset
+    '5gcenter': 11,
+    'classroom1': 12,
+    'classroom2': 13,
+    'classroom3': 14,
+    'lab': 15,
+    'office': 16,
+    'room': 17,
 }
 
 INV_OBJECT_LABEL = {
-    0: 'ceiling',
-    1: 'floor',
-    2: 'wall',
-    3: 'beam',
-    4: 'column',
-    5: 'window',
-    6: 'door',
-    7: 'chair',
-    8: 'table',
-    9: 'bookcase',
-    10: 'sofa',
-    11: 'board',
-    12: 'clutter',
+    0: 'chair',
+    1: 'column',
+    2: 'floor',
+    3: 'table',
+    4: 'wall',
+    5: 'clutter',
 }
 
 OBJECT_LABEL = {name: i for i, name in INV_OBJECT_LABEL.items()}
@@ -109,9 +110,9 @@ def read_s3dis_format(area_id: str,
 
 
 def get_parser():
-    parser = argparse.ArgumentParser(description='s3dis data prepare')
+    parser = argparse.ArgumentParser(description='5GDataset data prepare')
     parser.add_argument(
-        '--data-root', type=str, default='./Stanford3dDataset_v1.2', help='root dir save data')
+        '--data-root', type=str, default='./5GDataset', help='root dir save data')
     parser.add_argument(
         '--save-dir', type=str, default='./preprocess', help='directory save processed data')
     parser.add_argument(
@@ -146,7 +147,8 @@ if __name__ == '__main__':
                 f"patch -ruN -p0 -d  {data_root} < {osp.join(osp.dirname(__file__), 's3dis.patch')}"
             )
 
-    area_list = ['Area_1', 'Area_2', 'Area_3', 'Area_4', 'Area_5', 'Area_6']
+    # area_list = ['Area_1', 'Area_2', 'Area_3', 'Area_4', 'Area_5', 'Area_6']
+    area_list = ['Area_11', 'Area_12']
     # area_list = ['Area_1']
     # area_list = ['Area_2']
     # area_list = ['Area_3']
