@@ -21,6 +21,12 @@ ROOM_TYPES = {
     'lounge': 8,
     'lobby': 9,
     'openspace': 10,
+    # add types for the 5GDataset
+    '5gcenter': 11,
+    'classroom': 12,
+    'lab': 13,
+    'office': 14,
+    'room': 15,
 }
 
 INV_OBJECT_LABEL = {
@@ -89,7 +95,10 @@ def read_s3dis_format(area_id: str,
         object_name = os.path.splitext(os.path.basename(single_object))[0]
         if verbose:
             print(f'adding object {i_object} : {object_name}')
-        object_class = object_name.split('_')[0]
+        if '_' in object_name:
+            object_class = object_name.split('_')[0]
+        else:
+            object_class = object_name.split('.')[0]
         object_label = object_name_to_label(object_class)
         obj_ver = pd.read_csv(single_object, sep=' ', header=None).values
         _, obj_ind = nn.kneighbors(obj_ver[:, 0:3])
@@ -146,8 +155,8 @@ if __name__ == '__main__':
                 f"patch -ruN -p0 -d  {data_root} < {osp.join(osp.dirname(__file__), 's3dis.patch')}"
             )
 
-    area_list = ['Area_1', 'Area_2', 'Area_3', 'Area_4', 'Area_5', 'Area_6']
-    # area_list = ['Area_1']
+    # area_list = ['Area_1', 'Area_2', 'Area_3', 'Area_4', 'Area_5', 'Area_6']
+    area_list = ['Area_12']
     # area_list = ['Area_2']
     # area_list = ['Area_3']
     # area_list = ['Area_4']
