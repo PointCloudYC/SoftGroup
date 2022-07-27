@@ -12,21 +12,21 @@ import torch
 
 # import gorilla
 
-INV_OBJECT_LABEL = {
-    0: 'ceiling',
-    1: 'floor',
-    2: 'wall',
-    3: 'beam',
-    4: 'column',
-    5: 'window',
-    6: 'door',
-    7: 'chair',
-    8: 'table',
-    9: 'bookcase',
-    10: 'sofa',
-    11: 'board',
-    12: 'clutter',
-}
+# INV_OBJECT_LABEL = {
+#     0: 'ceiling',
+#     1: 'floor',
+#     2: 'wall',
+#     3: 'beam',
+#     4: 'column',
+#     5: 'window',
+#     6: 'door',
+#     7: 'chair',
+#     8: 'table',
+#     9: 'bookcase',
+#     10: 'sofa',
+#     11: 'board',
+#     12: 'clutter',
+# }
 INV_OBJECT_LABEL = {
     0: 'chair',
     1: 'column',

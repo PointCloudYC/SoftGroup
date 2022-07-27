@@ -29,7 +29,7 @@ model:
 
 data:
   train:
-    type: 's3dis'
+    type: '5gdataset'
     data_root: 'dataset/5gdataset/preprocess'
     prefix: ['Area_11']
     suffix: '_inst_nostuff.pth'
@@ -41,7 +41,7 @@ data:
       max_npoint: 250000
       min_npoint: 5000
   test:
-    type: 's3dis'
+    type: '5gdataset'
     data_root: 'dataset/5gdataset/preprocess'
     prefix: 'Area_12'
     suffix: '_inst_nostuff.pth'

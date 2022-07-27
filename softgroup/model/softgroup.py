@@ -370,6 +370,7 @@ class SoftGroup(nn.Module):
             if proposals_idx.size(0) > 0:
                 proposals_idx_list.append(proposals_idx)
                 proposals_offset_list.append(proposals_offset)
+        # BUG: RuntimeError: torch.cat(): expected a non-empty list of Tensors
         proposals_idx = torch.cat(proposals_idx_list, dim=0)
         proposals_offset = torch.cat(proposals_offset_list)
         return proposals_idx, proposals_offset
@@ -427,12 +428,12 @@ class SoftGroup(nn.Module):
                 score_pred = score_pred[inds]
                 mask_pred = mask_pred[inds]
             # avoid mmemory OOM when testing on S3DIS, based on https://github.com/thangvubk/SoftGroup/issues/68
-            # cls_pred_list.append(cls_pred)
-            # score_pred_list.append(score_pred)
-            # mask_pred_list.append(mask_pred)
-            cls_pred_list.append(cls_pred.cpu())
-            score_pred_list.append(score_pred.cpu())
-            mask_pred_list.append(mask_pred.cpu())
+            cls_pred_list.append(cls_pred)
+            score_pred_list.append(score_pred)
+            mask_pred_list.append(mask_pred)
+            # cls_pred_list.append(cls_pred.cpu())
+            # score_pred_list.append(score_pred.cpu())
+            # mask_pred_list.append(mask_pred.cpu())
         cls_pred = torch.cat(cls_pred_list).cpu().numpy()
         score_pred = torch.cat(score_pred_list).cpu().numpy()
         mask_pred = torch.cat(mask_pred_list).cpu().numpy()

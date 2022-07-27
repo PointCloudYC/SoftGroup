@@ -23,12 +23,10 @@ ROOM_TYPES = {
     'openspace': 10,
     # add types for the 5GDataset
     '5gcenter': 11,
-    'classroom1': 12,
-    'classroom2': 13,
-    'classroom3': 14,
-    'lab': 15,
-    'office': 16,
-    'room': 17,
+    'classroom': 12,
+    'lab': 13,
+    'office': 14,
+    'room': 15,
 }
 
 INV_OBJECT_LABEL = {
@@ -90,7 +88,11 @@ def read_s3dis_format(area_id: str,
         object_name = os.path.splitext(os.path.basename(single_object))[0]
         if verbose:
             print(f'adding object {i_object} : {object_name}')
-        object_class = object_name.split('_')[0]
+        if '_' in object_name:
+            object_class = object_name.split('_')[0]
+        else:
+            object_class = object_name.split('.')[0]
+
         object_label = object_name_to_label(object_class)
         obj_ver = pd.read_csv(single_object, sep=' ', header=None).values
         _, obj_ind = nn.kneighbors(obj_ver[:, 0:3])
