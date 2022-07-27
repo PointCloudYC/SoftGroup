@@ -107,12 +107,12 @@ Then, train model from frozen backbone.
 
 ### inferrence
 
-- ./tools/dist_test.sh $CONFIG_FILE $CHECKPOINT $NUM_GPU
+- ./tools/dist_test.sh $CONFIG_FILE $CHECKPOINT $NUM_GPU; inference on S3DIS Area_5 costs about 6h(456min), while test on 5GDataset costs 6h (359min)
 ```
 ./tools/dist_test.sh configs/softgroup_s3dis_fold5.yaml softgroup_s3dis_spconv2.pth 4
 ```
 
-Currently, not succeed on the test set(Area_5), it need a larger GPU(My experiments are performed on 48G GPU so that i don't have memory issues) based on the  [about S3DIS test · Issue #45 · thangvubk/SoftGroup](https://github.com/thangvubk/SoftGroup/issues/45) and [need lger GPU to make inference on S3DIS](https://github.com/thangvubk/SoftGroup/issues/68), maybe 3090 GPU can help. Yet, 
+Currently, on server-HP(4 T4 GPS) not succeed on the test set(Area_5) but **on server-superrico(2 3090 GPUs) succeed!!!**, it need a larger GPU(My experiments are performed on 48G GPU so that i don't have memory issues) based on the  [about S3DIS test · Issue #45 · thangvubk/SoftGroup](https://github.com/thangvubk/SoftGroup/issues/45) and [need lger GPU to make inference on S3DIS](https://github.com/thangvubk/SoftGroup/issues/68), maybe 3090 GPU can help. Yet, 
 
 
 ### visualization
@@ -120,7 +120,7 @@ Currently, not succeed on the test set(Area_5), it need a larger GPU(My experime
 TODO
 
 
-## FAQ
+## FAQ 
 
 ### can not preprocesss the S3DIS and report the key '.DS' is not existed
 
@@ -132,3 +132,9 @@ TODO
 
 - some files have literal string int the data;
 - check: https://github.com/thangvubk/SoftGroup/issues/51 and revise the S3DIS data according to the patch file https://raw.githubusercontent.com/Gorilla-Lab-SCUT/gorilla-3d/dev/gorilla3d/preprocessing/s3dis/s3dis_align.patch
+>another quick way to fix this is to copy the coorect to the problematic S3DIS by `unzip patch.zip -d ./` where patch.zip contain the three files (which are zipped by `zip -r patch.zip Area_2/auditorium_1/auditorium_1.txt Area_5/hallway_6/Annotations/ceiling_1.txt Area_3/hallway_2/hallway_2.txt`
+
+
+### report CUDA 700 and SPCONV_DEBUG_SAVE_PATH not found
+
+see [Spconv and Cuda error while training on my own dataset · Issue #56 · thangvubk/SoftGroup](https://github.com/thangvubk/SoftGroup/issues/56)
