@@ -8,4 +8,4 @@
 
 
 # infer s3dis
-time ./tools/dist_test.sh configs/softgroup_s3dis_fold5.yaml checkpoints/softgroup_s3dis_spconv2.pth 4 exp-test/s3dis/result 
+time ./tools/dist_test.sh configs/softgroup_s3dis_fold5.yaml checkpoints/softgroup_s3dis_spconv2.pth 2 exp-test/s3dis/result 
