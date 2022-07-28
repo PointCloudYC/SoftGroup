@@ -1,11 +1,10 @@
 # visualize
 
 dataset="s3dis"
-prediction_path="./exp-test/s3dis/result"
+prediction_path="./exp-test/5gdataset/result-area12"
 vis_path="${prediction_path}/vis"
-
-# room_names=("Area_5_conferenceRoom_1")
-room_names=("Area_5_conferenceRoom_1" "Area_5_hallway_1" "Area_5_office_1" "Area_5_storage_1" "Area_5_WC_1")
+room_names=("Area_12_room_1")
+# room_names=("Area_5_conferenceRoom_1" "Area_5_hallway_1" "Area_5_office_1" "Area_5_storage_1" "Area_5_WC_1")
 
 # tasks=("instance_pred") # input or offset_semantic_pred
 tasks=("instance_gt" "instance_pred" "semantic_gt" "semantic_pred") # input or offset_semantic_pred

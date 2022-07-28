@@ -11,8 +11,8 @@
 echo 'test 5GDataset Area 12 using pretrained model on the S3DIS'
 time ./tools/dist_test.sh configs/softgroup_5gdataset_area12.yaml checkpoints/softgroup_s3dis_spconv2.pth 2 exp-test/5gdataset/result-area12 
 
-echo 'test 5GDataset Area 11 using pretrained model on the S3DIS'
-time ./tools/dist_test.sh configs/softgroup_5gdataset_area11.yaml checkpoints/softgroup_s3dis_spconv2.pth 2 exp-test/5gdataset/result-area11
+# echo 'test 5GDataset Area 11 using pretrained model on the S3DIS'
+# time ./tools/dist_test.sh configs/softgroup_5gdataset_area11.yaml checkpoints/softgroup_s3dis_spconv2.pth 2 exp-test/5gdataset/result-area11
 
 # echo 'test 5GDataset Area 11'
 # time ./tools/dist_test.sh configs/softgroup_5gdataset_area11.yaml checkpoints/softgroup_s3dis_spconv2.pth 1 exp-test/5GDataset/result-area11 
