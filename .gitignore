@@ -84,7 +84,9 @@ dataset/stpls3d/Synthetic_v3_InstanceSegmentation
 
 # yc
 work_dirs/**
+work_dirs-backup/**
 checkpoints/*.pth
 exp/**
 exp-val*/**
 exp-test/**
+dataset/5gdataset/5GDataset-backup/*

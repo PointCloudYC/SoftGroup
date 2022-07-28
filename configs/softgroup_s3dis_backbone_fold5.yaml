@@ -3,7 +3,7 @@ model:
   num_blocks: 7
   semantic_classes: 13
   instance_classes: 13
-  sem2ins_classes: [0, 1]
+  sem2ins_classes: [0, 1] # ceiling and floor
   semantic_only: True
   ignore_label: -100
   grouping_cfg:
