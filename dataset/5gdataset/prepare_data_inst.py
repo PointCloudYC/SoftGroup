@@ -149,8 +149,8 @@ if __name__ == '__main__':
                 f"patch -ruN -p0 -d  {data_root} < {osp.join(osp.dirname(__file__), 's3dis.patch')}"
             )
 
-    # area_list = ['Area_1', 'Area_2', 'Area_3', 'Area_4', 'Area_5', 'Area_6']
-    area_list = ['Area_11', 'Area_12']
+    area_list = ['Area_1', 'Area_2', 'Area_3', 'Area_4', 'Area_5']
+    # area_list = ['Area_11', 'Area_12']
     # area_list = ['Area_1']
     # area_list = ['Area_2']
     # area_list = ['Area_3']

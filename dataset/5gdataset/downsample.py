@@ -29,11 +29,7 @@ def get_parser():
     parser.add_argument(
         '--data-dir', type=str, default='./preprocess', help='directory save processed data')
     parser.add_argument('--ratio', type=float, default=0.25, help='random downsample ratio')
-    parser.add_argument(
-        '--voxel-size',
-        type=float,
-        default=None,
-        help='voxelization size (priority is higher than voxel-size)')
+    parser.add_argument( '--voxel-size', type=float, default=None, help='voxelization size (priority is higher than voxel-size)')
     parser.add_argument('--verbose', action='store_true', help='show partition information or not')
 
     args_cfg = parser.parse_args()
