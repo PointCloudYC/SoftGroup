@@ -3,15 +3,15 @@ model:
   num_blocks: 7
   semantic_classes: 6 # chair column floor table wall clutter
   instance_classes: 4
-  sem2ins_classes: [3] # use floor as direct instance; note: s3dis use floor and ceil as instance directly
+  sem2ins_classes: [2] # use floor as direct instance; note: s3dis use floor and ceil as instance directly
   semantic_only: False
   ignore_label: -100
   grouping_cfg:
     score_thr: 0.2
-    radius: 0.002 # s3dis is 0.04, 2/scale
+    radius: 0.008 # previous 0.002 # s3dis's radius is 0.04, about 2*1/scale=0.02
     mean_active: 300
     # class_numpoint_mean: [1823, 7457, 6189, 7424, 34229, 1724, 5439, 6016, 39796, 5279, 5092, 12210, 10225]
-    class_numpoint_mean: [49000, 101387, 16227406,-1, 2000000, 882470] # TODO?
+    class_numpoint_mean: [49000, 101387, 16227406,190000, 2000000, 882470] # TODO?
     npoint_thr: 0.05  # absolute if class_numpoint == -1, relative if class_numpoint != -1
     ignore_classes: [3] # same as sem2ins_classes
   instance_voxel_cfg:
@@ -36,7 +36,8 @@ data:
     repeat: 20
     training: True
     voxel_cfg:
-      scale: 1000
+      # scale: 1000
+      scale: 250 # S3DISis 50, with resolution about 1/50=0.02
       spatial_shape: [128, 512]
       max_npoint: 250000
       min_npoint: 5000
@@ -47,15 +48,16 @@ data:
     suffix: '_inst_nostuff.pth'
     training: False
     voxel_cfg:
-      scale: 1000
+      # scale: 1000
+      scale: 250 # S3DISis 50, with resolution about 1/50=0.02
       spatial_shape: [128, 512]
       max_npoint: 250000
       min_npoint: 5000
 
 dataloader:
   train:
-    batch_size: 4
-    num_workers: 4
+    batch_size: 2 # 4
+    num_workers: 2 # 4
   test:
     batch_size: 1
     num_workers: 1

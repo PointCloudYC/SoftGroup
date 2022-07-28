@@ -65,7 +65,7 @@ time python tools/visualization.py \
 
 ### run on the custom data
 
-TODO
+- set up the config, exp. scale, grouping_cfg.radius in each config, details see: https://github.com/thangvubk/SoftGroup/blob/main/docs/custom_dataset.md and `SoftGroup/docs/config_explanation.md`
 
 
 ## S3DIS
