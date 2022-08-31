@@ -138,3 +138,10 @@ TODO
 ### report CUDA 700 and SPCONV_DEBUG_SAVE_PATH not found
 
 see [Spconv and Cuda error while training on my own dataset · Issue #56 · thangvubk/SoftGroup](https://github.com/thangvubk/SoftGroup/issues/56)
+
+
+### train the softgroup on 5gdataset with backbone, report RuntimeError: torch.cat(): expected a non-empty list of Tensors for the softgroup.py
+
+- solution: set the config's `semantic_only`=True and `fixed_modules`=[]; since when set the semantic_only to be true, you can not train the model if you fixed all modules
+
+* [fixed\_modules causes training issues · Issue #66 · thangvubk/SoftGroup](https://github.com/thangvubk/SoftGroup/issues/66)

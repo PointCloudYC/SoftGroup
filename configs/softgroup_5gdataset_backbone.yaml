@@ -1,0 +1,84 @@
+model:
+  channels: 32
+  num_blocks: 7
+  semantic_classes: 6 # chair column floor table wall clutter
+  instance_classes: 6 # ~ignore wall and clutter type
+  sem2ins_classes: [2] # use floor as direct instance; note: s3dis use floor and ceil as instance directly
+  semantic_only: True # If true, only the point-wise networks (semantic and offset) are trained. The top-down refinement stage is not taken into consideration. Set it to True ussualy using for pretraining the backbone.
+  ignore_label: -100
+  grouping_cfg:
+    score_thr: 0.2
+    radius: 0.008 # previous 0.002 # s3dis's radius is 0.04, about 2*1/scale=0.02
+    mean_active: 300 # to constrain total size after K-NN
+    # class_numpoint_mean: [1823, 7457, 6189, 7424, 34229, 1724, 5439, 6016, 39796, 5279, 5092, 12210, 10225] # S3DIS
+    # class_numpoint_mean: [49000, 101387, 16227406, 190000, 2000000, 882470] # previous setting
+    class_numpoint_mean: [98791, 101072, 5621760, 552629, 1584834, 3378041] # computed using a script "compute_median_points_each_instance.py"
+    # class_numpoint_mean will be multiplied by npoint_thr to filter out grouped instances of small size
+    # when grouping, if num_point[i] > npoint_thr * class_numpoint_mean[i], the cluster is consider as an instance, otherwise discarded. 
+    npoint_thr: 0.05  # absolute if class_numpoint == -1, relative if class_numpoint != -1
+    ignore_classes: [2]
+  instance_voxel_cfg:
+    scale: 250  # scaling factor, voxel size = 1 / scale. In this case voxel_size = 1/50 = 0.02m
+    spatial_shape: 20  # the dimension of instance in terms of voxels, i.e., H, W, D of instance will be 20 voxels. 
+  train_cfg:
+    max_proposal_num: 200  # if number of proposals > max_proposal_num while training, the number of propsoals will be truncated to reduce memory usage.
+    pos_iou_thr: 0.5  # intersection over union threshold to identify positive and negative samples.
+  test_cfg:
+    x4_split: True  # whether divide the scene into 4 part then merge the results. This is used for S3DIS dataset since the scene is very big.
+    cls_score_thr: 0.001  # score threshold for postprocessing
+    mask_score_thr: -0.5  # threshold to classify background and foreground in segmentation
+    min_npoint: 100  # min number of points for each instance
+  fixed_modules: [] # specified module will not have gradient updates while training.
+
+data:
+  train:
+    type: '5gdataset'
+    data_root: 'dataset/5gdataset/preprocess'
+    prefix: ['Area_1', 'Area_2', 'Area_3']
+    suffix: '_inst_nostuff.pth'
+    repeat: 20  # repeat factor for the data. In case the dataset is small, using repeat to avoid data loading every epoch -> reduce loading time; stpls3d is 4
+    training: True
+    voxel_cfg:
+      # scale: 1000 # the point coordinates are scaled up for voxelization; sub-sampling grid size = 1/scale=0.001
+      scale: 250 # S3DISis 50, with resolution about 1/50=0.02
+      spatial_shape: [128, 512]  # min and max spatial shape of the whole scene after random crop
+      max_npoint: 250000  # max number of points after random crop
+      min_npoint: 5000  # min number of points after random crop
+  test:
+    type: '5gdataset'  # test data type
+    data_root: 'dataset/5gdataset/preprocess'
+    prefix: 'Area_4' # for testing , use the Area_5, data prefix
+    suffix: '_inst_nostuff.pth'  # data suffix
+    training: False  # test mode
+    voxel_cfg:
+      # scale: 1000 # the point coordinates are scaled up for voxelization; sub-sampling grid size = 1/scale=0.001
+      scale: 250 # S3DIS is 50, with resolution about 1/50=0.02
+      spatial_shape: [128, 512]  # no effect during testing
+      max_npoint: 250000  # no effect during testing
+      min_npoint: 5000  # no effect during testing
+
+dataloader:
+  train:
+    batch_size: 2 # 4
+    num_workers: 2 # 4
+  test:
+    batch_size: 1
+    num_workers: 1
+
+optimizer:
+  type: 'Adam'
+  lr: 0.002 # 4 GPUs use 0.004, otherwise reduce the lr linearly; check its github issues
+
+save_cfg:
+  semantic: True
+  offset: True
+  instance: False
+
+fp16: False
+epochs: 30
+step_epoch: 0
+save_freq: 2
+# pretrain: './hais_ckpt_spconv2.pth'
+# pretrain: './checkpoints/hais_ckpt_spconv2.pth' # TODO: stpls3d has no check points, so here also ignore?
+pretrain: ''
+work_dir: ''

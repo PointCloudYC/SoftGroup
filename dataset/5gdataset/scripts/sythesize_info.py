@@ -27,8 +27,7 @@ def object_name_to_label(object_class):
 
 def get_parser():
     parser = argparse.ArgumentParser(description='5GDataset data prepare')
-    parser.add_argument(
-        '--data-root', type=str, default='./5GDataset', help='root dir save data')
+    parser.add_argument('--data-root', type=str, default='/opt/code/SoftGroup/dataset/5gdataset/5GDataset', help='root dir save data')
     parser.add_argument(
         '--save-file', type=str, default='./summary.csv', help='directory save info')
     # parser.add_argument(
@@ -40,8 +39,6 @@ def get_parser():
 
     return args_cfg
 
-
-# patch -ruN -p0 -d  raw < s3dis.patch
 if __name__ == '__main__':
     args = get_parser()
     data_root = args.data_root
@@ -49,7 +46,8 @@ if __name__ == '__main__':
     save_file = args.save_file
     # os.makedirs(save_dir, exist_ok=True)
 
-    area_list = ['Area_11', 'Area_12']
+    area_list = ['Area_1', 'Area_2','Area_3', 'Area_4', 'Area_5']
+    # area_list = ['Area_11', 'Area_12']
     # area_list = ['Area_6']
 
     number_category_list=[]
